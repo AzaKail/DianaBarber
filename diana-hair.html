@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Парикмахерская Диана — Уральск</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --dark: #2C2C2A;
+  --dark2: #1a1a18;
+  --pink: #F4C0D1;
+  --pink-deep: #D4537E;
+  --pink-text: #4B1528;
+  --cream: #FBEAF0;
+  --muted: #D3D1C7;
+  --gray: #888780;
+  --light: #f9f7f5;
+  --white: #ffffff;
+  --border: rgba(0,0,0,0.08);
+  --max: 1100px;
+  --section-pad: 72px 40px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Georgia', serif;
+  background: var(--light);
+  color: var(--dark);
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(26,26,24,0.92);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 60px;
+}
+.nav-logo {
+  font-size: 20px;
+  color: var(--cream);
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.nav-links a {
+  font-family: sans-serif;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--pink); }
+
+/* Lang switcher */
+.lang-switch {
+  display: flex;
+  background: rgba(255,255,255,0.07);
+  border-radius: 99px;
+  padding: 3px;
+  gap: 2px;
+  margin-left: 20px;
+}
+.lang-btn {
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+.lang-btn.active {
+  background: var(--pink);
+  color: var(--pink-text);
+}
+
+/* Mobile nav toggle */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.nav-burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--muted);
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 60px; left: 0; right: 0;
+  background: var(--dark2);
+  z-index: 99;
+  padding: 16px 24px 24px;
+  flex-direction: column;
+  gap: 16px;
+}
+.mobile-menu a {
+  font-family: sans-serif;
+  font-size: 15px;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.mobile-menu.open { display: flex; }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 560px;
+  overflow: hidden;
+}
+.hero img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(30,28,26,0.58);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px 40px;
+  text-align: center;
+}
+.hero-tag {
+  font-family: sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--pink);
+  opacity: 0.85;
+  margin-bottom: 14px;
+}
+.hero-title {
+  font-size: clamp(52px, 8vw, 100px);
+  font-weight: normal;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 14px;
+  letter-spacing: -2px;
+}
+.hero-sub {
+  font-family: sans-serif;
+  font-size: clamp(13px, 1.6vw, 16px);
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 480px;
+}
+.btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-pink {
+  background: var(--pink); color: var(--pink-text);
+  font-family: sans-serif; font-size: 14px; font-weight: 600;
+  padding: 14px 28px; border-radius: 99px;
+  text-decoration: none; transition: opacity 0.2s;
+}
+.btn-pink:hover { opacity: 0.85; }
+.btn-outline {
+  background: transparent; color: var(--pink);
+  border: 1px solid var(--pink);
+  font-family: sans-serif; font-size: 14px;
+  padding: 14px 28px; border-radius: 99px;
+  text-decoration: none; transition: background 0.2s;
+}
+.btn-outline:hover { background: rgba(244,192,209,0.1); }
+
+/* chips */
+.chips-bar {
+  display: flex; justify-content: center;
+  gap: 8px; flex-wrap: wrap;
+  background: var(--dark2);
+  padding: 14px 20px;
+}
+.chip {
+  font-family: sans-serif; font-size: 12px;
+  background: rgba(244,192,209,0.12);
+  color: var(--pink);
+  padding: 6px 14px; border-radius: 99px;
+}
+
+/* ── INNER SECTIONS ── */
+.sec {
+  padding: var(--section-pad);
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.sec:nth-child(even) { background: var(--light); }
+
+.inner { max-width: var(--max); margin: 0 auto; }
+
+.sec-lbl {
+  font-family: sans-serif;
+  font-size: 10px; letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gray); margin-bottom: 12px;
+}
+.sec-title {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: normal; color: var(--dark);
+  margin-bottom: 16px; line-height: 1.25;
+}
+.about-txt {
+  font-family: sans-serif; font-size: 15px;
+  color: #555; line-height: 1.8;
+  max-width: 640px;
+}
+
+/* two-col layout for about on desktop */
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.about-img {
+  width: 100%; border-radius: 16px;
+  aspect-ratio: 4/3; object-fit: cover;
+}
+
+/* ── TABS ── */
+.tabs-row { display: flex; gap: 8px; margin-bottom: 18px; }
+.tab {
+  font-family: sans-serif; font-size: 13px;
+  padding: 8px 20px; border-radius: 99px;
+  cursor: pointer; border: none; transition: all 0.2s;
+}
+.tab.active { background: var(--dark); color: var(--cream); }
+.tab.inactive { background: #eee; color: var(--gray); }
+
+/* services grid — 3 cols on desktop, 2 on mobile */
+.sg {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.services-female { display: grid; grid-template-columns: repeat(3,1fr); gap:10px; }
+.services-male { display: none; grid-template-columns: repeat(3,1fr); gap:10px; }
+
+.sc {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px;
+}
+.sec:nth-child(even) .sc { background: var(--white); }
+.sn { font-family: sans-serif; font-size: 14px; color: var(--dark); margin-bottom: 5px; }
+.sp { font-family: sans-serif; font-size: 14px; color: var(--pink-deep); font-weight: 700; }
+.price-note { font-family: sans-serif; font-size: 12px; color: var(--gray); margin-top: 12px; }
+
+/* ── PERKS 4-col on desktop ── */
+.pg {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.pk {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 18px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.picon { font-size: 26px; }
+.pt { font-family: sans-serif; font-size: 13px; font-weight: 700; color: var(--dark); }
+.pd { font-family: sans-serif; font-size: 12px; color: var(--gray); line-height: 1.5; }
+
+/* ── GALLERY 4 cols desktop ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.gimg { width:100%; aspect-ratio:1; object-fit:cover; border-radius:10px; display:block; }
+
+/* ── STEPS horizontal on desktop ── */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 24px;
+}
+.step {
+  display: flex; flex-direction: column; gap: 12px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px;
+}
+.snum {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--dark); color: var(--pink);
+  font-family: sans-serif; font-size: 14px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.stit { font-family: sans-serif; font-size: 15px; font-weight: 700; color: var(--dark); }
+.sdesc { font-family: sans-serif; font-size: 13px; color: var(--gray); }
+.cta-wrap { margin-top: 28px; display: flex; justify-content: center; }
+.cta-btn {
+  display: inline-block; text-align: center;
+  background: var(--dark); color: var(--pink);
+  font-family: sans-serif; font-size: 15px; font-weight: 700;
+  padding: 16px 40px; border-radius: 12px;
+  text-decoration: none; transition: opacity 0.2s;
+}
+.cta-btn:hover { opacity: 0.85; }
+
+/* ── CONTACTS two-col ── */
+.contacts-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.crow {
+  display: flex; align-items: center; gap: 14px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  font-family: sans-serif;
+}
+.crow:last-of-type { border-bottom: none; }
+.ci { font-size: 20px; width: 24px; flex-shrink: 0; }
+.ct { font-size: 15px; color: var(--dark); }
+.map-wrap { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); }
+.map-wrap img { width:100%; display:block; height: 220px; object-fit: cover; }
+.map-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--dark); color: var(--pink);
+  font-family: sans-serif; font-size: 14px; font-weight: 700;
+  padding: 14px; border-radius: 12px;
+  text-decoration: none; margin-top: 12px;
+  transition: opacity 0.2s;
+}
+.map-btn:hover { opacity: 0.85; }
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--dark2);
+  padding: 36px 40px;
+  font-family: sans-serif;
+}
+.footer-inner {
+  max-width: var(--max); margin: 0 auto;
+  display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.ftit { font-family: 'Georgia', serif; font-size: 18px; color: var(--cream); }
+.fsub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.flinks { display: flex; gap: 20px; flex-wrap: wrap; }
+.flink { font-size: 12px; color: var(--pink); text-decoration: none; opacity: 0.8; }
+.flink:hover { opacity: 1; }
+.made-by { font-size: 10px; color: var(--gray); margin-top: 6px; letter-spacing: 1px; }
+
+/* ══════════════════════
+   RESPONSIVE — TABLET
+══════════════════════ */
+@media (max-width: 900px) {
+  :root { --section-pad: 48px 24px; }
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+  .pg { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { grid-template-columns: repeat(3,1fr); }
+  .steps { grid-template-columns: 1fr; }
+  .contacts-inner { grid-template-columns: 1fr; }
+  .about-inner { grid-template-columns: 1fr; }
+  .about-img { display: none; }
+  .services-female, .services-male, .sg { grid-template-columns: 1fr 1fr; }
+  .footer { padding: 28px 24px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+
+/* ══════════════════════
+   RESPONSIVE — MOBILE
+══════════════════════ */
+@media (max-width: 560px) {
+  :root { --section-pad: 32px 16px; }
+  nav { padding: 0 16px; }
+  .pg { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { grid-template-columns: repeat(3,1fr); }
+  .chips-bar { padding: 10px 12px; }
+  .chip { font-size: 11px; padding: 5px 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Диана</a>
+  <div class="nav-links">
+    <a href="#about" data-i18n="nav_about">О нас</a>
+    <a href="#services" data-i18n="nav_services">Услуги</a>
+    <a href="#gallery" data-i18n="nav_gallery">Работы</a>
+    <a href="#contacts" data-i18n="nav_contacts">Контакты</a>
+    <a href="https://wa.me/77001234567" style="color:var(--pink);" data-i18n="nav_book">Записаться</a>
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('kz')">ҚАЗ</button>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="lang-switch" id="mobile-lang" style="display:none;">
+      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('kz')">ҚАЗ</button>
+    </div>
+    <button class="nav-burger" id="burger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about" onclick="closeMenu()" data-i18n="nav_about">О нас</a>
+  <a href="#services" onclick="closeMenu()" data-i18n="nav_services">Услуги</a>
+  <a href="#gallery" onclick="closeMenu()" data-i18n="nav_gallery">Работы</a>
+  <a href="#contacts" onclick="closeMenu()" data-i18n="nav_contacts">Контакты</a>
+  <a href="https://wa.me/77001234567" style="color:var(--pink);" data-i18n="nav_book">Записаться</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1400&q=80" alt="Парикмахерская Диана">
+  <div class="hero-overlay">
+    <div class="hero-tag" data-i18n="hero_tag">Парикмахерская · Уральск</div>
+    <div class="hero-title">Диана</div>
+    <div class="hero-sub" data-i18n="hero_sub">Женские и мужские стрижки, окрашивание, укладка и уход за волосами</div>
+    <div class="btn-row">
+      <a class="btn-pink" href="https://wa.me/77001234567" data-i18n="btn_wa">Записаться в WhatsApp</a>
+      <a class="btn-outline" href="#services" data-i18n="btn_services">Услуги и цены</a>
+    </div>
+  </div>
+</div>
+
+<div class="chips-bar">
+  <span class="chip" data-i18n="chip1">Женский зал</span>
+  <span class="chip" data-i18n="chip2">Мужские стрижки</span>
+  <span class="chip" data-i18n="chip3">Окрашивание</span>
+  <span class="chip" data-i18n="chip4">Укладки</span>
+  <span class="chip" data-i18n="chip5">Детские стрижки</span>
+</div>
+
+<!-- О НАС -->
+<div class="sec" id="about">
+  <div class="inner">
+    <div class="about-inner">
+      <div>
+        <div class="sec-lbl" data-i18n="about_lbl">О нас</div>
+        <div class="sec-title" data-i18n="about_title">Уютная парикмахерская для всей семьи</div>
+        <p class="about-txt" data-i18n="about_txt">Парикмахерская «Диана» — место, где можно привести волосы в порядок, обновить образ или подготовиться к важному событию. Работаем для женщин, мужчин и детей. Спокойная атмосфера и внимательное отношение к каждому клиенту.</p>
+      </div>
+      <img class="about-img" src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=700&q=80" alt="Салон">
+    </div>
+  </div>
+</div>
+
+<!-- УСЛУГИ -->
+<div class="sec" id="services">
+  <div class="inner">
+    <div class="sec-lbl" data-i18n="services_lbl">Услуги и цены</div>
+    <div class="tabs-row">
+      <button class="tab active" onclick="switchTab('female',this)" data-i18n="tab_female">Женские</button>
+      <button class="tab inactive" onclick="switchTab('male',this)" data-i18n="tab_male">Мужские</button>
+    </div>
+    <div class="services-female" id="tab-female">
+      <div class="sc"><div class="sn" data-i18n="f1">Женская стрижка</div><div class="sp">от 3 000 ₸</div></div>
+      <div class="sc"><div class="sn" data-i18n="f2">Подравнивание</div><div class="sp">от 2 000 ₸</div></div>
+      <div class="sc"><div class="sn" data-i18n="f3">Укладка</div><div class="sp">от 3 000 ₸</div></div>
+      <div class="sc"><div class="sn" data-i18n="f4">Окрашивание</div><div class="sp">от 8 000 ₸</div></div>
+      <div class="sc"><div class="sn" data-i18n="f5">Мелирование</div><div class="sp">от 12 000 ₸</div></div>
+      <div class="sc"><div class="sn" data-i18n="f6">Уход за волосами</div><div class="sp">от 5 000 ₸</div></div>
+    </div>
+    <div class="services-male" id="tab-male">
+      <div class="sc"><div class="sn" data-i18n="m1">Мужская стрижка</div><div class="sp">от 2 500 ₸</div></div>
+      <div class="sc"><div class="sn" data-i18n="m2">Стрижка машинкой</div><div class="sp">от 1 500 ₸</div></div>
+      <div class="sc"><div class="sn" data-i18n="m3">Оформление бороды</div><div class="sp">от 1 500 ₸</div></div>
+      <div class="sc"><div class="sn" data-i18n="m4">Детская стрижка</div><div class="sp">от 2 000 ₸</div></div>
+      <div class="sc"><div class="sn" data-i18n="m5">Стрижка + борода</div><div class="sp">от 3 500 ₸</div></div>
+      <div class="sc"><div class="sn" data-i18n="m6">Укладка</div><div class="sp">от 2 000 ₸</div></div>
+    </div>
+    <p class="price-note" data-i18n="price_note">Точная стоимость зависит от длины волос и сложности работы.</p>
+  </div>
+</div>
+
+<!-- ПОЧЕМУ МЫ -->
+<div class="sec">
+  <div class="inner">
+    <div class="sec-lbl" data-i18n="perks_lbl">Почему выбирают нас</div>
+    <div class="pg">
+      <div class="pk"><span class="picon">✂️</span><div class="pt" data-i18n="p1t">Опытные мастера</div><div class="pd" data-i18n="p1d">Аккуратная работа и индивидуальный подход к каждому</div></div>
+      <div class="pk"><span class="picon">👨‍👩‍👧</span><div class="pt" data-i18n="p2t">Вся семья</div><div class="pd" data-i18n="p2d">Женские, мужские и детские стрижки в одном месте</div></div>
+      <div class="pk"><span class="picon">💬</span><div class="pt" data-i18n="p3t">Запись в WhatsApp</div><div class="pd" data-i18n="p3d">Без звонков и долгого ожидания — просто напишите</div></div>
+      <div class="pk"><span class="picon">🏷️</span><div class="pt" data-i18n="p4t">Понятные цены</div><div class="pd" data-i18n="p4d">Уточните стоимость заранее перед визитом</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ГАЛЕРЕЯ -->
+<div class="sec" id="gallery">
+  <div class="inner">
+    <div class="sec-lbl" data-i18n="gallery_lbl">Наши работы</div>
+    <div class="gallery-grid">
+      <img class="gimg" src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80" alt="Стрижка">
+      <img class="gimg" src="https://images.unsplash.com/photo-1519735777090-ec97162dc266?w=400&q=80" alt="Укладка">
+      <img class="gimg" src="https://images.unsplash.com/photo-1634302086703-6d1f8cba9f31?w=400&q=80" alt="Окрашивание">
+      <img class="gimg" src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=400&q=80" alt="Мужская стрижка">
+      <img class="gimg" src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=400&q=80" alt="Парикмахерская">
+      <img class="gimg" src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=400&q=80" alt="Стрижка 2">
+      <img class="gimg" src="https://images.unsplash.com/photo-1582095133179-bfd08e2fb6b9?w=400&q=80" alt="Работа 3">
+      <img class="gimg" src="https://images.unsplash.com/photo-1595163153849-5b2c9f58166f?w=400&q=80" alt="Работа 4">
+    </div>
+  </div>
+</div>
+
+<!-- КАК ЗАПИСАТЬСЯ -->
+<div class="sec">
+  <div class="inner">
+    <div class="sec-lbl" data-i18n="booking_lbl">Как записаться</div>
+    <div class="steps">
+      <div class="step">
+        <div class="snum">1</div>
+        <div class="stit" data-i18n="s1t">Напишите в WhatsApp</div>
+        <div class="sdesc" data-i18n="s1d">Укажите услугу и удобное время для визита</div>
+      </div>
+      <div class="step">
+        <div class="snum">2</div>
+        <div class="stit" data-i18n="s2t">Мастер уточнит детали</div>
+        <div class="sdesc" data-i18n="s2d">Подберём свободное время и озвучим стоимость</div>
+      </div>
+      <div class="step">
+        <div class="snum">3</div>
+        <div class="stit" data-i18n="s3t">Приходите к нам</div>
+        <div class="sdesc" data-i18n="s3d">Ждём вас по адресу в назначенное время</div>
+      </div>
+    </div>
+    <div class="cta-wrap">
+      <a class="cta-btn" href="https://wa.me/77001234567" data-i18n="cta">Записаться сейчас →</a>
+    </div>
+  </div>
+</div>
+
+<!-- КОНТАКТЫ -->
+<div class="sec" id="contacts">
+  <div class="inner">
+    <div class="sec-lbl" data-i18n="contacts_lbl">Адрес и контакты</div>
+    <div class="contacts-inner">
+      <div>
+        <div class="crow"><span class="ci">📍</span><div class="ct" data-i18n="addr">г. Уральск, ул. Достык 14</div></div>
+        <div class="crow"><span class="ci">🕐</span><div class="ct" data-i18n="hours">Пн–Сб, 10:00–20:00</div></div>
+        <div class="crow"><span class="ci">📱</span><div class="ct">+7 701 234-56-78</div></div>
+        <div class="crow"><span class="ci">📸</span><div class="ct">@diana_hair_uralsk</div></div>
+        <a class="map-btn" href="https://2gis.kz/search/%D0%A3%D1%80%D0%B0%D0%BB%D1%8C%D1%81%D0%BA%2C%20%D1%83%D0%BB.%20%D0%94%D0%BE%D1%81%D1%82%D1%8B%D0%BA%2C%2014" target="_blank" style="margin-top:20px;" data-i18n="map_btn">
+          🗺️ Открыть маршрут в 2GIS
+        </a>
+      </div>
+      <div>
+        <div class="map-wrap">
+          <img src="https://static-maps.yandex.ru/1.x/?ll=51.2294,51.2268&z=16&l=map&size=600,220&pt=51.2294,51.2268,pm2rdm" alt="Карта">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="ftit">Парикмахерская «Диана»</div>
+      <div class="fsub" data-i18n="footer_sub">Женские и мужские стрижки в Уральске</div>
+      <div class="made-by">Сделано · Qala Sites</div>
+    </div>
+    <div class="flinks">
+      <a class="flink" href="https://wa.me/77001234567">WhatsApp</a>
+      <a class="flink" href="https://instagram.com/diana_hair_uralsk">Instagram</a>
+      <a class="flink" href="#contacts" data-i18n="nav_contacts">Контакты</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const T = {
+  ru: {
+    nav_about:'О нас', nav_services:'Услуги', nav_gallery:'Работы', nav_contacts:'Контакты', nav_book:'Записаться',
+    hero_tag:'Парикмахерская · Уральск',
+    hero_sub:'Женские и мужские стрижки, окрашивание, укладка и уход за волосами',
+    btn_wa:'Записаться в WhatsApp', btn_services:'Услуги и цены',
+    chip1:'Женский зал', chip2:'Мужские стрижки', chip3:'Окрашивание', chip4:'Укладки', chip5:'Детские стрижки',
+    about_lbl:'О нас', about_title:'Уютная парикмахерская для всей семьи',
+    about_txt:'Парикмахерская «Диана» — место, где можно привести волосы в порядок, обновить образ или подготовиться к важному событию. Работаем для женщин, мужчин и детей. Спокойная атмосфера и внимательное отношение к каждому клиенту.',
+    services_lbl:'Услуги и цены', tab_female:'Женские', tab_male:'Мужские',
+    f1:'Женская стрижка', f2:'Подравнивание', f3:'Укладка', f4:'Окрашивание', f5:'Мелирование', f6:'Уход за волосами',
+    m1:'Мужская стрижка', m2:'Стрижка машинкой', m3:'Оформление бороды', m4:'Детская стрижка', m5:'Стрижка + борода', m6:'Укладка',
+    price_note:'Точная стоимость зависит от длины волос и сложности работы.',
+    perks_lbl:'Почему выбирают нас',
+    p1t:'Опытные мастера', p1d:'Аккуратная работа и индивидуальный подход к каждому',
+    p2t:'Вся семья', p2d:'Женские, мужские и детские стрижки в одном месте',
+    p3t:'Запись в WhatsApp', p3d:'Без звонков и долгого ожидания — просто напишите',
+    p4t:'Понятные цены', p4d:'Уточните стоимость заранее перед визитом',
+    gallery_lbl:'Наши работы',
+    booking_lbl:'Как записаться',
+    s1t:'Напишите в WhatsApp', s1d:'Укажите услугу и удобное время для визита',
+    s2t:'Мастер уточнит детали', s2d:'Подберём свободное время и озвучим стоимость',
+    s3t:'Приходите к нам', s3d:'Ждём вас по адресу в назначенное время',
+    cta:'Записаться сейчас →',
+    contacts_lbl:'Адрес и контакты',
+    addr:'г. Уральск, ул. Достык 14', hours:'Пн–Сб, 10:00–20:00',
+    map_btn:'🗺️ Открыть маршрут в 2GIS',
+    footer_sub:'Женские и мужские стрижки в Уральске'
+  },
+  kz: {
+    nav_about:'Біз туралы', nav_services:'Қызметтер', nav_gallery:'Жұмыстар', nav_contacts:'Байланыс', nav_book:'Жазылу',
+    hero_tag:'Шаштараз · Орал қаласы',
+    hero_sub:'Әйелдер мен ерлерге арналған шаш қию, бояу, үйіту және күтім',
+    btn_wa:'WhatsApp арқылы жазылу', btn_services:'Қызметтер мен бағалар',
+    chip1:'Әйелдер залы', chip2:'Ерлер шаш қию', chip3:'Бояу', chip4:'Үйіту', chip5:'Балалар шаш қию',
+    about_lbl:'Біз туралы', about_title:'Бүкіл отбасына арналған жайлы шаштараз',
+    about_txt:'«Диана» шаштаразы — шашыңызды реттеп, бейнеңізді жаңартуға немесе маңызды оқиғаға дайындалуға болатын орын. Әйелдер, ерлер және балалармен жұмыс жасаймыз. Тыныш атмосфера және әр клиентке жеке көзқарас.',
+    services_lbl:'Қызметтер мен бағалар', tab_female:'Әйелдерге', tab_male:'Ерлерге',
+    f1:'Әйелдер шаш қию', f2:'Ұштарын түзету', f3:'Үйіту', f4:'Шаш бояу', f5:'Мелирование', f6:'Шаш күтімі',
+    m1:'Ерлер шаш қию', m2:'Машинкамен қию', m3:'Сақал өңдеу', m4:'Балалар шаш қию', m5:'Шаш қию + сақал', m6:'Үйіту',
+    price_note:'Нақты баға шаштың ұзындығы мен жұмыстың күрделілігіне байланысты.',
+    perks_lbl:'Неліктен бізді таңдайды',
+    p1t:'Тәжірибелі шеберлер', p1d:'Әрқайсысына мұқият және жеке тәсілмен',
+    p2t:'Бүкіл отбасы', p2d:'Әйелдер, ерлер және балалар — бір жерде',
+    p3t:'WhatsApp арқылы жазылу', p3d:'Қоңырау шалмай-ақ жай хабарлама жіберіңіз',
+    p4t:'Түсінікті бағалар', p4d:'Келуден бұрын бағасын алдын ала біліңіз',
+    gallery_lbl:'Біздің жұмыстар',
+    booking_lbl:'Қалай жазылуға болады',
+    s1t:'WhatsApp-қа хабарлама жіберіңіз', s1d:'Қызметті және ыңғайлы уақытты көрсетіңіз',
+    s2t:'Шебер мәліметтерді нақтылайды', s2d:'Бос уақыт пен шамамен бағаны айтамыз',
+    s3t:'Бізге келіңіз', s3d:'Белгіленген уақытта мекенжайымызда күтеміз',
+    cta:'Қазір жазылу →',
+    contacts_lbl:'Мекенжай және байланыс',
+    addr:'Орал қаласы, Достық к., 14', hours:'Дс–Сб, 10:00–20:00',
+    map_btn:'🗺️ 2GIS-те маршрутты ашу',
+    footer_sub:'Орал қаласындағы әйелдер мен ерлерге арналған шаштараз'
+  }
+};
+
+let lang = 'ru';
+
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (T[l][key]) el.textContent = T[l][key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active',
+      (btn.textContent.trim() === 'RU' && l === 'ru') ||
+      (btn.textContent.trim() === 'ҚАЗ' && l === 'kz')
+    );
+  });
+}
+
+function switchTab(gender, btn) {
+  document.getElementById('tab-female').style.display = gender === 'female' ? 'grid' : 'none';
+  document.getElementById('tab-male').style.display = gender === 'male' ? 'grid' : 'none';
+  document.querySelectorAll('.tab').forEach(t => t.className = 'tab inactive');
+  btn.className = 'tab active';
+}
+
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+
+// show mobile lang switcher on small screens
+function checkMobileLang() {
+  const ml = document.getElementById('mobile-lang');
+  ml.style.display = window.innerWidth <= 900 ? 'flex' : 'none';
+}
+checkMobileLang();
+window.addEventListener('resize', checkMobileLang);
+</script>
+</body>
+</html>
